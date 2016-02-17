@@ -9,19 +9,22 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 import networking.MessageListener;
 import networking.MessageSender;
-import networking.WritableGUI;
-
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
+import java.awt.Window.Type;
+import java.awt.Font;
 
-public class ChatGUI implements WritableGUI{
+public class ChatGUI{
 
-	private JFrame frame;
+	private JFrame frmChatApplication;
 	private JTextField ipAddressTextField;
 	private JTextField targetPort;
 	private JTextField message;
@@ -37,7 +40,7 @@ public class ChatGUI implements WritableGUI{
 			public void run() {
 				try {
 					ChatGUI window = new ChatGUI();
-					window.frame.setVisible(true);
+					window.frmChatApplication.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,86 +59,147 @@ public class ChatGUI implements WritableGUI{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(0, -48, 761, 413);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmChatApplication = new JFrame();
+		frmChatApplication.setTitle("Chat Application");
+		frmChatApplication.getContentPane().setBackground(Color.BLACK);
+		frmChatApplication.setBounds(0, -48, 761, 413);
+		frmChatApplication.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmChatApplication.getContentPane().setLayout(null);
 		
 		ipAddressTextField = new JTextField();
+		ipAddressTextField.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		ipAddressTextField.setBackground(Color.LIGHT_GRAY);
 		ipAddressTextField.setText("localhost");
-		ipAddressTextField.setBounds(268, 12, 184, 20);
-		frame.getContentPane().add(ipAddressTextField);
+		ipAddressTextField.setBounds(250, 12, 184, 20);
+		frmChatApplication.getContentPane().add(ipAddressTextField);
 		ipAddressTextField.setColumns(10);
 		
 		targetPort = new JTextField();
-		targetPort.setText("8877");
+		targetPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		targetPort.setBackground(Color.LIGHT_GRAY);
+		targetPort.setText("8802");
 		targetPort.setBounds(540, 12, 86, 20);
-		frame.getContentPane().add(targetPort);
+		frmChatApplication.getContentPane().add(targetPort);
 		targetPort.setColumns(10);
 		
 		chatText = new JTextArea();
-		chatText.setBounds(10, 43, 715, 287);
-		frame.getContentPane().add(chatText);
+		chatText.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		chatText.setEditable(false);
+		chatText.setLineWrap(true);
+		chatText.setWrapStyleWord(true);
+		chatText.setBackground(Color.LIGHT_GRAY);
+		chatText.setBounds(163, 9, 694, 287);
+		frmChatApplication.getContentPane().add(chatText);
+		
+		JScrollPane scrollPane = new JScrollPane(chatText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(10, 43, 715, 287);
+		frmChatApplication.getContentPane().add(scrollPane);
 		
 		message = new JTextField();
+		message.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		message.setBackground(Color.LIGHT_GRAY);
 		message.setBounds(86, 341, 371, 20);
-		frame.getContentPane().add(message);
+		frmChatApplication.getContentPane().add(message);
 		message.setColumns(10);
 		
 		JButton enterButton = new JButton("Enter");
+		enterButton.setForeground(Color.WHITE);
+		enterButton.setBackground(Color.DARK_GRAY);
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MessageSender transmitter = new MessageSender(message.getText(), ipAddressTextField.getText(), Integer.parseInt(targetPort.getText()));
-				transmitter.start();			
-				
-				chatText.append(("Me : "+ message.getText() + System.lineSeparator()));
-				message.setText(null);
+				sendMessage();
+
 			}
 		});
 		enterButton.setBounds(495, 340, 89, 23);
-		frame.getContentPane().add(enterButton);
+		frmChatApplication.getContentPane().add(enterButton);
 		
 		JButton Start = new JButton("Start");
+		Start.setForeground(Color.WHITE);
+		Start.setBackground(Color.DARK_GRAY);
 		Start.addActionListener(new ActionListener() {
 	
 			public void actionPerformed(ActionEvent e) {
-				startAction();
+				startMessageListener();
 			}
 		});
 		Start.setBounds(636, 11, 89, 23);
-		frame.getContentPane().add(Start);
+		frmChatApplication.getContentPane().add(Start);
 		
 		receivingPort = new JTextField();
-		receivingPort.setText("8878");
-		receivingPort.setBounds(77, 12, 114, 20);
-		frame.getContentPane().add(receivingPort);
+		receivingPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		receivingPort.setBackground(Color.LIGHT_GRAY);
+		receivingPort.setText("8801");
+		receivingPort.setBounds(80, 12, 86, 20);
+		frmChatApplication.getContentPane().add(receivingPort);
 		receivingPort.setColumns(10);
 		
 		JLabel lblYourPort = new JLabel("Your port :");
+		lblYourPort.setForeground(Color.WHITE);
 		lblYourPort.setBounds(10, 15, 59, 14);
-		frame.getContentPane().add(lblYourPort);
+		frmChatApplication.getContentPane().add(lblYourPort);
 		
 		JLabel lblTargetIp = new JLabel("Target IP :");
-		lblTargetIp.setBounds(202, 15, 59, 14);
-		frame.getContentPane().add(lblTargetIp);
+		lblTargetIp.setForeground(Color.WHITE);
+		lblTargetIp.setBounds(180, 15, 59, 14);
+		frmChatApplication.getContentPane().add(lblTargetIp);
 		
 		JLabel lblTargetPort = new JLabel("Target port :");
+		lblTargetPort.setForeground(Color.WHITE);
 		lblTargetPort.setBounds(460, 15, 70, 14);
-		frame.getContentPane().add(lblTargetPort);
+		frmChatApplication.getContentPane().add(lblTargetPort);
 		
 		JLabel lblMessage = new JLabel("Message :");
+		lblMessage.setForeground(Color.WHITE);
 		lblMessage.setBounds(20, 344, 79, 14);
-		frame.getContentPane().add(lblMessage);
+		frmChatApplication.getContentPane().add(lblMessage);
+		
+		JButton btnQuit = new JButton("Quit");
+		btnQuit.setForeground(Color.WHITE);
+		btnQuit.setBackground(Color.DARK_GRAY);
+		btnQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnQuit.setBounds(615, 340, 89, 23);
+		frmChatApplication.getContentPane().add(btnQuit);
 	}
 	
-	public void startAction() {
+	//Start listening for messages on start button press
+	public void startMessageListener() {
 		listener = new MessageListener(this, Integer.parseInt(receivingPort.getText()));
 		listener.start();
 	}
+	
+	//Send message to target user on enter button press
+	public void sendMessage() {
+		
+		//Send user message to target IP and port
+		MessageSender sender = new MessageSender(this, message.getText(), ipAddressTextField.getText(), Integer.parseInt(targetPort.getText()));
+		sender.start();			
+		
+		if(!message.getText().equals(""))
+		{
+			//print message to gui if not blank
+			chatText.append(("Me : "+ message.getText() + "\n"));
+			DefaultCaret caret = (DefaultCaret)chatText.getCaret();
+			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+			message.setText(null);
+		}
+	}
 
-	@Override
-	public void write(String message) {
-		// TODO Auto-generated method stub
-		chatText.append("Friend : "+ message + System.lineSeparator());
+	//Write the current Friend message to the gui chat text frame
+	public void writeFriendsChatText(String message) {
+		chatText.append("Friend : "+ message + "\n");
+		DefaultCaret caret = (DefaultCaret)chatText.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+	}
+	
+	//Write the current message to the gui chat text frame
+	public void writeChatText(String message) {
+		chatText.append(message + "\n");
+		DefaultCaret caret = (DefaultCaret)chatText.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	}
 }
