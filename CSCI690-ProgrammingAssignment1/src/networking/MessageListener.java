@@ -11,8 +11,8 @@ import java.net.Socket;
 import gui.ChatGUI;
 
 public class MessageListener extends Thread{
-	
-	
+
+
 	ServerSocket server;
 	int port = 8802;
 	ChatGUI gui;
@@ -23,18 +23,18 @@ public class MessageListener extends Thread{
 		{
 			//ServerSocket : waits for requests to come in on selected port
 			server = new ServerSocket(port);
-			gui.writeChatText("Success! Server socket on port : " + port);
+			gui.writeChatText("Success! Server socket on port : " + port, true);
 		}
 		catch(IOException e){
 			e.printStackTrace();
 			if(e instanceof BindException)
 			{
-				gui.writeChatText("Failed! Port " + port + " is in use or cannot be assigned.");
+				gui.writeChatText("Failed! Port " + port + " is in use or cannot be assigned.", true);
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void run(){
 		Socket clientSocket;
@@ -44,22 +44,21 @@ public class MessageListener extends Thread{
 			{
 				//get input stream from accepted socket
 				InputStream inputStream = clientSocket.getInputStream();
-				
+
 				//create a character input stream buffer
 				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(inputStream));
-				
+
 				//receive message from buffer
 				String message = bufferReader.readLine();
 				if(message != null)
 				{
 					//write message to gui chat text frame
-					gui.writeFriendsChatText(message);
+					gui.writeChatText(message, false);
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			gui.writeChatText("Failed to be recieved");
+			gui.writeChatText("Message failed to be recieved.", true);
 		}
 	}
 }
