@@ -67,7 +67,7 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().setLayout(null);
 		
 		ipAddressTextField = new JTextField();
-		ipAddressTextField.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		ipAddressTextField.setFont(new Font("Bodoni MT Black", Font.PLAIN, 14));
 		ipAddressTextField.setBackground(Color.LIGHT_GRAY);
 		ipAddressTextField.setText("localhost");
 		ipAddressTextField.setBounds(261, 12, 161, 20);
@@ -75,7 +75,7 @@ public class ChatGUI{
 		ipAddressTextField.setColumns(10);
 		
 		targetPort = new JTextField();
-		targetPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		targetPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 14));
 		targetPort.setBackground(Color.LIGHT_GRAY);
 		targetPort.setText("8802");
 		targetPort.setBounds(540, 12, 86, 20);
@@ -96,15 +96,15 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().add(scrollPane);
 		
 		message = new JTextField();
-		message.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		message.setFont(new Font("Bodoni MT Black", Font.PLAIN, 14));
 		message.setBackground(Color.LIGHT_GRAY);
 		message.setBounds(86, 341, 371, 20);
 		frmChatApplication.getContentPane().add(message);
 		message.setColumns(10);
 		
 		JButton enterButton = new JButton("Enter");
-		enterButton.setForeground(Color.WHITE);
-		enterButton.setBackground(Color.DARK_GRAY);
+		enterButton.setForeground(Color.BLACK);
+		enterButton.setBackground(Color.LIGHT_GRAY);
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendMessage();
@@ -115,8 +115,8 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().add(enterButton);
 		
 		JButton Start = new JButton("Start");
-		Start.setForeground(Color.WHITE);
-		Start.setBackground(Color.DARK_GRAY);
+		Start.setForeground(Color.BLACK);
+		Start.setBackground(Color.LIGHT_GRAY);
 		Start.addActionListener(new ActionListener() {
 	
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +127,7 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().add(Start);
 		
 		receivingPort = new JTextField();
-		receivingPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
+		receivingPort.setFont(new Font("Bodoni MT Black", Font.PLAIN, 14));
 		receivingPort.setBackground(Color.LIGHT_GRAY);
 		receivingPort.setText("8801");
 		receivingPort.setBounds(80, 12, 86, 20);
@@ -155,8 +155,8 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().add(lblMessage);
 		
 		JButton btnQuit = new JButton("Quit");
-		btnQuit.setForeground(Color.WHITE);
-		btnQuit.setBackground(Color.DARK_GRAY);
+		btnQuit.setForeground(Color.BLACK);
+		btnQuit.setBackground(Color.LIGHT_GRAY);
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
