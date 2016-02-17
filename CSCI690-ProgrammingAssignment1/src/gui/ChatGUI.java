@@ -96,7 +96,7 @@ public class ChatGUI{
 		frmChatApplication.getContentPane().add(scrollPane);
 		
 		message = new JTextField();
-		message.setFont(new Font("Bodoni MT Black", Font.PLAIN, 14));
+		message.setFont(new Font("Bodoni MT Black", Font.PLAIN, 12));
 		message.setBackground(Color.LIGHT_GRAY);
 		message.setBounds(86, 341, 371, 20);
 		frmChatApplication.getContentPane().add(message);
@@ -111,7 +111,7 @@ public class ChatGUI{
 
 			}
 		});
-		enterButton.setBounds(495, 340, 89, 23);
+		enterButton.setBounds(494, 341, 89, 23);
 		frmChatApplication.getContentPane().add(enterButton);
 		
 		JButton Start = new JButton("Start");
