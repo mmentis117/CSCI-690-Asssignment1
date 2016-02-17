@@ -70,7 +70,7 @@ public class ChatGUI{
 		ipAddressTextField.setFont(new Font("Bodoni MT Black", Font.PLAIN, 16));
 		ipAddressTextField.setBackground(Color.LIGHT_GRAY);
 		ipAddressTextField.setText("localhost");
-		ipAddressTextField.setBounds(250, 12, 184, 20);
+		ipAddressTextField.setBounds(261, 12, 161, 20);
 		frmChatApplication.getContentPane().add(ipAddressTextField);
 		ipAddressTextField.setColumns(10);
 		
@@ -136,17 +136,17 @@ public class ChatGUI{
 		
 		JLabel lblYourPort = new JLabel("Your port :");
 		lblYourPort.setForeground(Color.WHITE);
-		lblYourPort.setBounds(10, 15, 59, 14);
+		lblYourPort.setBounds(10, 15, 70, 14);
 		frmChatApplication.getContentPane().add(lblYourPort);
 		
 		JLabel lblTargetIp = new JLabel("Target IP :");
 		lblTargetIp.setForeground(Color.WHITE);
-		lblTargetIp.setBounds(180, 15, 59, 14);
+		lblTargetIp.setBounds(180, 15, 79, 14);
 		frmChatApplication.getContentPane().add(lblTargetIp);
 		
 		JLabel lblTargetPort = new JLabel("Target port :");
 		lblTargetPort.setForeground(Color.WHITE);
-		lblTargetPort.setBounds(460, 15, 70, 14);
+		lblTargetPort.setBounds(453, 15, 86, 14);
 		frmChatApplication.getContentPane().add(lblTargetPort);
 		
 		JLabel lblMessage = new JLabel("Message :");
